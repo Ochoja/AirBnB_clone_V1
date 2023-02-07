@@ -1,0 +1,8 @@
+#!/usr/bin/python3
+import uuid
+
+class BaseModel:
+    """Defines all common attributes/methods for other classes"""
+    def __init__(self, id, created_at, updated_at):
+        """Constructor"""
+        self.id = uuid.uuid4()
