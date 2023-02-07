@@ -1,6 +1,8 @@
 #!/usr/bin/python3
+"""BaseModel parent class"""
 import uuid
 from datetime import datetime
+
 
 class BaseModel:
     """Defines all common attributes/methods for other classes"""
@@ -18,15 +20,12 @@ class BaseModel:
     def to_dict(self):
         """Returns a dictionary of all key/values
         of __dict__ of the instance"""
-        dict_values = self.__dict__
-        dict_values["__class__"] = type(self).__name__ # adds class name to dict
-        dict_values["created_at"] = datetime.isoformat(self.created_at)
-        dict_values["updated_at"] = datetime.isoformat(self.updated_at)
-        return dict_values
+        new_dict = self.__dict__
+        new_dict["__class__"] = type(self).__name__  # adds class name to dict
+        new_dict["created_at"] = datetime.isoformat(self.created_at)
+        new_dict["updated_at"] = datetime.isoformat(self.updated_at)
+        return new_dict
 
     def __str__(self):
         """Runs when user prints instance eg. print(self)"""
         return f"[{type(self).__name__}] ({self.id}) {self.__dict__}"
-
-a = BaseModel()
-print(a.to_dict())
