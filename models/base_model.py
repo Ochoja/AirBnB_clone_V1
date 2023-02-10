@@ -13,22 +13,10 @@ class BaseModel:
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
         else:
-            valid_keys = ("id", "created_at", "updated_at")
-            # set attribute if key does not exist in kwargs
-            for i in valid_keys:
-                if i not in kwargs:
-                    if i == "id":
-                        self.id = str(uuid.uuid4())
-                    else:
-                        self.i = datetime.now()
-
-            # set instance attributes using key word arguments
+            # set instance attributes using kwargs dictionary
             for key, value in kwargs.items():
                 if key == "__class__":  # skip `__class__` key
                     continue
-                elif key not in valid_keys:
-                    # raise error for invalid keys
-                    raise KeyError("Invalid Key")
                 else:
                     # convert datetime string to datetime object
                     if key == "created_at" or key == "updated_at":
