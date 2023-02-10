@@ -47,10 +47,9 @@ class FileStorage:
         except FileNotFoundError:
             pass  # Do nothing if file does not exist
         else:
+            from models.base_model import BaseModel
             # create objects from temp_dict values and save in `__objects`
             for key, value in temp_dict.items():
-                # key.__class__ = Class Name (eg.'BaseModel' <type: str>)
-                # convert dict to obj and add to `__objects`
-                class_name = key.__class__
-                exec(f"obj = {class_name}({value})")
+                class_name = value["__class__"]
+                obj = eval(f"{class_name}(**value)")
                 FileStorage.__objects[key] = obj
