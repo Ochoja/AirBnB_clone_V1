@@ -44,12 +44,12 @@ class FileStorage:
         try:
             with open(FileStorage.__file_path, 'r') as json_file:
                 temp_dict = json.load(json_file)
-        except FileNotFoundError:
-            pass  # Do nothing if file does not exist
-        else:
+
             from models.base_model import BaseModel
             # create objects from temp_dict values and save in `__objects`
             for key, value in temp_dict.items():
                 class_name = value["__class__"]
                 obj = eval(f"{class_name}(**value)")
                 FileStorage.__objects[key] = obj
+        except FileNotFoundError:
+            pass  # Do nothing if file does not exist
