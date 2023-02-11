@@ -45,3 +45,8 @@ class BaseModel:
     def __str__(self):
         """Runs when user prints instance eg. print(self)"""
         return f"[{type(self).__name__}] ({self.id}) {self.__dict__}"
+
+    @staticmethod
+    def all():
+        """returns all instances saved"""
+        return storage.all()
