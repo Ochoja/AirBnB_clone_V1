@@ -57,30 +57,44 @@ class HBNBCommand(cmd.Cmd):
             if not id_exists:
                 print("** no instance found **")
 
-        def do_destroy(self, arg):
-            """Deletes an instance based on the class name and id
-            eg destroy BaseModel 342352"""
-            args = arg.split()
-            if (len(args) == 0):
-                print("** class name missing **")
-            elif (len(args) == 1):
-                print("** instance id missing **")
-            elif args[0] != "BaseModel":
-                print("** class doesn't exist **")
-            else:
-                objects = BaseModel.all()
-                id_exists = False
+    def do_destroy(self, arg):
+        """Deletes an instance based on the class name and id
+        eg destroy BaseModel 342352"""
+        args = arg.split()
+        if (len(args) == 0):
+            print("** class name missing **")
+        elif (len(args) == 1):
+            print("** instance id missing **")
+        elif args[0] != "BaseModel":
+            print("** class doesn't exist **")
+        else:
+            objects = BaseModel.all()
+            id_exists = False
 
-                for key, value in objects.items():
-                    if args[0] in key:
-                        obj_id = key[len(args[0]) + 1:]
-                        if args[1] == obj_id:
-                            del value
-                            id_exists = True
-                            break
+            for key, value in objects.items():
+                if args[0] in key:
+                    obj_id = key[len(args[0]) + 1:]
+                    if args[1] == obj_id:
+                        del value
+                        id_exists = True
+                        break
 
-                        if not id_exists:
-                            print("** no instance found **")
+            if not id_exists:
+                print("** no instance found **")
+
+    def do_all(self, arg):
+        """Prints all string representation of all instances
+        based or not on the class name eg all BaseModel or all"""
+        if arg == "" or arg == "BaseModel":
+            objects = BaseModel.all()
+            obj_list = []
+
+            for key, value in objects.items():
+                obj_list.append(value.__str__())
+
+            print(obj_list)
+        else:
+            print("** class doesn't exist **")
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
