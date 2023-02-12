@@ -91,12 +91,21 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, arg):
         """Prints objects based or not on the class eg-all BaseModel / all\n"""
-        if arg == "" or arg in HBNBCommand.classes:
+        if arg == "":
             objects = BaseModel.all()
             obj_list = []
 
             for key, value in objects.items():
                 obj_list.append(value.__str__())
+
+            print(obj_list)
+        elif arg in HBNBCommand.classes:
+            objects = BaseModel.all()
+            obj_list = []
+
+            for key, value in objects.items():
+                if arg in key:
+                    obj_list.append(value.__str__())
 
             print(obj_list)
         else:
