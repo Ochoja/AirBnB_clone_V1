@@ -15,6 +15,14 @@ class BaseModel:
             self.updated_at = datetime.now()
             storage.new(self)
         else:
+            if "id" not in kwargs.keys():
+                self.id = str(uuid.uuid4())
+
+            if "created_at" not in kwargs.keys():
+                self.created_at = datetime.now()
+
+            if "updated_at" not in kwargs.keys():
+                self.updated_at = datetime.now()
             # set instance attributes using kwargs dictionary
             for key, value in kwargs.items():
                 if key == "__class__":  # skip `__class__` key
