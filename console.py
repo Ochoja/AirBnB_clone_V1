@@ -75,7 +75,8 @@ class HBNBCommand(cmd.Cmd):
                 if args[0] in key:
                     obj_id = key[len(args[0]) + 1:]
                     if args[1] == obj_id:
-                        del value
+                        print(value)
+                        del objects[key]
                         id_exists = True
                         break
 
@@ -83,8 +84,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
     def do_all(self, arg):
-        """Prints all string representation of all instances
-        based or not on the class name eg all BaseModel or all"""
+        """Prints objects based or not on the class eg-all BaseModel / all\n"""
         if arg == "" or arg == "BaseModel":
             objects = BaseModel.all()
             obj_list = []
@@ -95,6 +95,42 @@ class HBNBCommand(cmd.Cmd):
             print(obj_list)
         else:
             print("** class doesn't exist **")
+
+    def do_update(self, arg):
+        """Update or add attribute to object\n"""
+        args = arg.split()
+
+        if len(args) == 0:
+            print("** class name missing **")
+        elif args[0] != "BaseModel":
+            print("** class doesn't exist **")
+        elif len(args) == 1:
+            print("** instance id missing **")
+        else:
+            objects = BaseModel.all()
+
+            id_exists = False
+            # loop through objects checking if id exists
+            for key, value in objects.items():
+                if args[0] in key:
+                    obj_id = key[len(args[0]) + 1:]
+                    if args[1] == obj_id:
+                        obj = objects[key]
+                        id_exists = True
+                        break
+
+            if id_exists:
+                # check if attribute name was provided
+                if len(args) == 2:
+                    print("** attribute name missing **")
+                elif len(args) == 3:
+                    print("** value missing **")
+                else:
+                    # Remove quotes ("") from args[3] and update attribute
+                    setattr(obj, args[2], args[3][1:-1])
+            else:
+                print("** no instance found **")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
