@@ -46,6 +46,11 @@ class FileStorage:
                 temp_dict = json.load(json_file)
 
             from models.base_model import BaseModel
+            from models.user import User
+            from models.city import City
+            from models.amenity import Amenity
+            from models.place import Place
+            from models.review import Review
             # create objects from temp_dict values and save in `__objects`
             for key, value in temp_dict.items():
                 class_name = value["__class__"]

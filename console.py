@@ -2,11 +2,19 @@
 """Entry point of the command line Interpreter"""
 import cmd
 from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
     """Entry point of the interpreter"""
     prompt = "(hbnb) "
+    classes = ["BaseModel", "User", "State", "City",
+               "Amenity", "Place", "Review"]
 
     def do_EOF(self, arg):
         """Closes the interpreter\n"""
@@ -33,14 +41,13 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
 
     def do_show(self, arg):
-        """Prints an object based on its class name and id
-        eg. show BaseModel 123232\n"""
+        """Prints an object eg. show BaseModel 123232\n"""
         args = arg.split()
         if (len(args) == 0):
             print("** class name missing **")
         elif (len(args) == 1):
             print("** instance id missing **")
-        elif args[0] != "BaseModel":
+        elif args[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
         else:
             objects = BaseModel.all()
@@ -58,14 +65,13 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
     def do_destroy(self, arg):
-        """Deletes an instance based on the class name and id
-        eg destroy BaseModel 342352"""
+        """Deletes an instance eg destroy BaseModel 342352\n"""
         args = arg.split()
         if (len(args) == 0):
             print("** class name missing **")
         elif (len(args) == 1):
             print("** instance id missing **")
-        elif args[0] != "BaseModel":
+        elif args[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
         else:
             objects = BaseModel.all()
@@ -85,7 +91,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, arg):
         """Prints objects based or not on the class eg-all BaseModel / all\n"""
-        if arg == "" or arg == "BaseModel":
+        if arg == "" or arg in HBNBCommand.classes:
             objects = BaseModel.all()
             obj_list = []
 
@@ -102,7 +108,7 @@ class HBNBCommand(cmd.Cmd):
 
         if len(args) == 0:
             print("** class name missing **")
-        elif args[0] != "BaseModel":
+        elif args[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")

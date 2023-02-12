@@ -1,0 +1,6 @@
+#!/usr/bin/python3
+"""Amenity"""
+
+
+class Amenity(BaseModel):
+    name = ""
