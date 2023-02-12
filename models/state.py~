@@ -1,7 +1,0 @@
-#!/usr/bin/python3
-"""State Class"""
-
-
-class State(BaseModel):
-    """hold state data"""
-    name = ""

@@ -1,9 +1,0 @@
-#!/usr/bin/python3
-"""Review"""
-
-
-class Review(BaseModel):
-    """Lodge Review Data"""
-    place_id = ""
-    user_id = ""
-    text = ""
